@@ -1,0 +1,162 @@
+/* Splash Screen CSS Fallback (when Tailwind is not available) */
+
+:root {
+  --splash-bg-start: rgba(245, 246, 248, 1);
+  --splash-bg-end: rgba(255, 255, 255, 1);
+  --splash-fg: #0F172A;      /* slate-900 */
+  --splash-cta: #16A34A;     /* green-600 */
+}
+
+.splash-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--splash-bg-start);
+  background-image: linear-gradient(to bottom, var(--splash-bg-start), var(--splash-bg-end));
+}
+
+.splash-skip-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--splash-cta);
+  background: transparent;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.splash-skip-button:hover {
+  color: var(--splash-fg);
+}
+
+.splash-skip-button:focus {
+  outline: 2px solid var(--splash-cta);
+  outline-offset: 2px;
+}
+
+.splash-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.splash-logo {
+  width: 8rem;
+  height: 8rem;
+  margin: 0 auto;
+  transition: all 1s ease-out;
+}
+
+.splash-logo.reveal {
+  animation: splashLogoReveal 1s ease-out forwards;
+}
+
+.splash-countdown {
+  font-size: 6rem;
+  font-weight: 700;
+  color: var(--splash-fg);
+  user-select: none;
+  line-height: 1;
+}
+
+.splash-countdown.tick {
+  animation: countdownTick 0.3s ease-out;
+}
+
+.splash-caption {
+  font-size: 1.125rem;
+  color: var(--splash-fg);
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+.splash-mascot {
+  position: absolute;
+  bottom: -0.5rem;
+  right: -0.5rem;
+  width: 2rem;
+  height: 2rem;
+  opacity: 0.6;
+}
+
+.splash-mascot.nudge {
+  animation: mascotNudge 2s ease-in-out infinite;
+}
+
+/* Keyframes */
+@keyframes splashLogoReveal {
+  from {
+    opacity: 0;
+    transform: translateY(1rem) blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) blur(0);
+  }
+}
+
+@keyframes countdownTick {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes mascotNudge {
+  0%, 100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  50% {
+    transform: translateX(2px) rotate(2deg);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .splash-logo,
+  .splash-countdown,
+  .splash-mascot {
+    animation: none;
+    transition: opacity 0.3s ease;
+  }
+  
+  .splash-logo.reveal {
+    opacity: 1;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .splash-logo {
+    width: 6rem;
+    height: 6rem;
+  }
+  
+  .splash-countdown {
+    font-size: 4rem;
+  }
+  
+  .splash-caption {
+    font-size: 1rem;
+  }
+}

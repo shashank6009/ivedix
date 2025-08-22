@@ -1,0 +1,321 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+/* CSS Variables for Splash Screen */
+:root {
+  --splash-bg-start: rgba(245, 246, 248, 1);
+  --splash-bg-end: rgba(255, 255, 255, 1);
+  --splash-fg: #0F172A;      /* slate-900 */
+  --splash-cta: #16A34A;     /* green-600 */
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #FF8C00, #32CD32);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #FFA500, #00FF00);
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Ensure splash screen covers full viewport */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Splash screen specific styles */
+.splash-fullscreen {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 9999 !important;
+}
+
+/* Video morphing animation */
+.video-morphing {
+  transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.video-morphed {
+  width: 160px !important;
+  height: 160px !important;
+  top: 8px !important;
+  left: 40px !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+}
+
+.video-fullscreen {
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Basic Home Page Styles (fallback if Tailwind fails) */
+.header {
+  background: linear-gradient(to bottom, rgba(0,0,0,0.92), rgba(0,0,0,0.96));
+  backdrop-filter: blur(25px);
+  border-bottom: 1px solid rgba(255,215,0,0.15);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  padding: 0.5rem 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+}
+
+.logo {
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 20px rgba(255,215,0,0.6));
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+
+.logo:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 12px 24px rgba(255,215,0,0.7));
+}
+
+.navigation {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  gap: 3rem;
+  align-items: center;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.125rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.5rem 0;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+
+.nav-link:hover {
+  color: #FF8C00;
+  transform: translateY(-2px);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(to right, #FF8C00, #32CD32);
+  transition: all 0.3s;
+  border-radius: 2px;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.cta-button {
+  background: linear-gradient(to bottom right, #FFD700, #FF8C00, #32CD32);
+  border: none;
+  border-radius: 9999px;
+  padding: 1.25rem 3.5rem;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: white;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: 0 8px 32px rgba(255,215,0,0.3);
+  border: 1px solid rgba(255,215,0,0.2);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  position: relative;
+}
+
+.cta-button:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 16px 48px rgba(255,215,0,0.4);
+  border-color: rgba(255,215,0,0.4);
+}
+
+.cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #FFD700, #FF8C00, #32CD32);
+  border-radius: 9999px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.cta-button:hover::before {
+  opacity: 1;
+}
+
+.hero-section {
+  margin-top: 15px;
+  height: calc(100vh - 15px);
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(to bottom right, #1e293b, #000000, #1e293b);
+  position: relative;
+}
+
+.hero-content {
+  text-align: center;
+  max-width: 1200px;
+  padding: 0 1rem;
+}
+
+.hero-title {
+  font-size: 4.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 2rem;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.hero-title span {
+  background: linear-gradient(to right, #f97316, #eab308, #22c55e);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-description {
+  font-size: 1.5rem;
+  color: #d1d5db;
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  line-height: 1.6;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.hero-button-primary {
+  background: linear-gradient(to right, #f97316, #22c55e);
+  color: white;
+  font-weight: 600;
+  padding: 1rem 2rem;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.hero-button-primary:hover {
+  transform: scale(1.05);
+}
+
+.hero-button-secondary {
+  background: transparent;
+  color: white;
+  font-weight: 600;
+  padding: 1rem 2rem;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.hero-button-secondary:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.5);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header-content {
+    padding: 0 1rem;
+    gap: 1.5rem;
+  }
+  
+  .logo {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .nav-list {
+    gap: 1.5rem;
+  }
+  
+  .nav-link {
+    font-size: 1rem;
+  }
+  
+  .cta-button {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+  }
+  
+  .hero-title {
+    font-size: 3rem;
+  }
+  
+  .hero-description {
+    font-size: 1.25rem;
+  }
+  
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+}
