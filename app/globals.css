@@ -65,6 +65,7 @@ html, body {
   left: 40px !important;
   border-radius: 50% !important;
   overflow: hidden !important;
+  transform: none !important; /* Prevent any additional transforms */
 }
 
 .video-fullscreen {
