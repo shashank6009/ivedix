@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import ChromaGrid from '../../components/ChromaGrid';
+import LightRays from '../../components/LightRays';
 import IndustryModal from '../../components/IndustryModal';
 import { industriesData } from '../../data/industriesData';
 import energy from '../../assets/energy.png';
@@ -216,9 +217,22 @@ export default function IndustriesPage() {
           alignItems: 'flex-start',
           justifyContent: 'flex-start',
           paddingLeft: '32px',
-          paddingTop: '5px',
+          paddingTop: '40px',
           boxSizing: 'border-box'
         }}>
+          <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+            <LightRays
+              raysOrigin="top-center"
+              raysColor="#00ffff"
+              raysSpeed={1.5}
+              lightSpread={0.8}
+              rayLength={1.2}
+              followMouse={true}
+              mouseInfluence={0.1}
+              noiseAmount={0.1}
+              distortion={0.05}
+            />
+          </div>
           <ChromaGrid 
             items={items}
             radius={300}
