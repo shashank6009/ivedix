@@ -91,3 +91,10 @@ jspm_packages/
 # Temporary folders
 tmp/
 temp/
+
+# Ignore large media in repo
+assets/*.mp4
+
+# Ignore large media
+assets/*.mp4
+public/assets/*.mp4

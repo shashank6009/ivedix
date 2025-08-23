@@ -21,6 +21,7 @@ export const SplashScreen: React.FC<SplashProps> = ({
   const [isClosing, setIsClosing] = useState(false);
   const [showLogo, setShowLogo] = useState(false);
   const [videoMorphing, setVideoMorphing] = useState(false);
+  const [logoMorphing, setLogoMorphing] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
 
   // Check for reduced motion preference
@@ -34,25 +35,22 @@ export const SplashScreen: React.FC<SplashProps> = ({
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
-  // Handle the morphing transition sequence
+  // Handle the fade transition sequence
   useEffect(() => {
     if (!isOpen) return;
 
-    // Start morphing after countdown reaches 0
+    // Start fade effect after countdown reaches 0
     if (seconds === 0 && !videoMorphing) {
       setVideoMorphing(true);
       
-      // Show logo after video starts morphing
+      // Show logo after video starts fading (same timing as before)
       setTimeout(() => {
         setShowLogo(true);
-      }, 300);
+      }, 600);
       
-      // Close splash after morphing completes
+      // Start logo morphing after video fade completes (same timing as before)
       setTimeout(() => {
-        setIsClosing(true);
-        setTimeout(() => {
-          // This will trigger the parent to unmount
-        }, 1000);
+        setLogoMorphing(true);
       }, 1200);
     }
   }, [isOpen, seconds, videoMorphing]);
@@ -86,22 +84,22 @@ export const SplashScreen: React.FC<SplashProps> = ({
         isClosing ? 'opacity-0' : 'opacity-100'
       } ${className}`}
       style={{
-        background: 'linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%)',
+        background: '#000000',
         perspective: '1000px',
         minHeight: '100vh',
         minWidth: '100vw',
+        pointerEvents: isClosing ? 'none' : 'auto',
       }}
     >
-      {/* Video Background with Morphing Animation */}
-      <div 
-        className={`absolute video-morphing ${
-          videoMorphing ? 'video-morphed' : 'video-fullscreen'
-        }`}
-        style={{
-          transformOrigin: 'top left',
-          willChange: videoMorphing ? 'transform, width, height, top, left' : 'auto',
-        }}
-      >
+              {/* Video Background with Fade Transition */}
+        <div 
+          className={`absolute video-morphing ${
+            videoMorphing ? 'video-fade-out' : 'video-fullscreen'
+          }`}
+          style={{
+            willChange: videoMorphing ? 'opacity, transform' : 'auto',
+          }}
+        >
         <video 
           className="w-full h-full object-contain bg-black" 
           autoPlay 
@@ -127,30 +125,37 @@ export const SplashScreen: React.FC<SplashProps> = ({
       
       
 
-      {/* Main Content - Hidden during morphing */}
+            {/* Main Content - Hidden during morphing */}
       <div className={`text-center space-y-12 relative z-30 transition-opacity duration-1000 ${
         videoMorphing ? 'opacity-0' : 'opacity-100'
       }`}>
         {/* Content removed for clean splash */}
       </div>
 
-                   {/* Enhanced Morphing Logo - Appears after video morphs */}
-             {showLogo && (
-               <div className={`absolute top-2 left-10 z-50 transition-all duration-1000 ease-out ${
-                 showLogo ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
-               }`}>
-                 <div className="relative">
-                   <img
-                     src={brandSrc}
-                     alt="iVEDiX"
-                     className="w-40 h-40 transition-all duration-1000 ease-out"
-                     style={{
-                       filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.3))',
-                     }}
-                   />
-                 </div>
-               </div>
-             )}
+      {/* Enhanced Morphing Logo - Appears after video fades and moves to header position */}
+      {showLogo && (
+        <div 
+          className={`absolute z-50 ${
+            logoMorphing ? 'logo-morphed' : 'logo-initial'
+          }`}
+          style={{
+            filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.3))',
+          }}
+        >
+          <img
+            src={brandSrc}
+            alt="iVEDiX"
+            className="w-40 h-40 object-contain"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain'
+            }}
+          />
+        </div>
+      )}
+
+      
 
       
 

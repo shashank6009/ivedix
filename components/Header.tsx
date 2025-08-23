@@ -1,30 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import Link from 'next/link';
 
 export default function Header() {
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-
-  const toggleDropdown = (dropdownName: string) => {
-    console.log('Toggling dropdown:', dropdownName, 'Current:', activeDropdown);
-    setActiveDropdown(activeDropdown === dropdownName ? null : dropdownName);
-  };
-
-  const closeDropdown = () => {
-    setActiveDropdown(null);
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as Element;
-      if (!target.closest('.nav-item')) {
-        setActiveDropdown(null);
-      }
-    };
-
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
-  }, []);
 
   return (
     <header className="header">
@@ -42,196 +21,32 @@ export default function Header() {
         <nav className="navigation">
           <ul className="nav-list">
             <li className="nav-item">
-              <button 
-                onClick={() => toggleDropdown('industries')} 
-                className="nav-link nav-button"
-              >
+              <Link href="/industries" className="nav-link nav-button">
                 Industries
-              </button>
-              <div className={`dropdown-menu ${activeDropdown === 'industries' ? 'active' : ''}`}>
-                <div className="dropdown-content">
-                  <div className="dropdown-grid">
-                    <div className="dropdown-item">
-                      <h4>Manufacturing</h4>
-                      <p>Track materials, parts and inventory.</p>
-                    </div>
-                    <div className="dropdown-item">
-                      <h4>Supply Chain</h4>
-                      <p>Real time visibility to the entire supply chain.</p>
-                    </div>
-                    <div className="dropdown-item">
-                      <h4>Warehouse & Logistics</h4>
-                      <p>Instant visibility of assets and movement within your warehouse and beyond.</p>
-                    </div>
-                    <div className="dropdown-item">
-                      <h4>Government & Public Safety</h4>
-                      <p>Integrated biometric, asset and fleet tracking solutions for government and civil entities.</p>
-                    </div>
-                    <div className="dropdown-item">
-                      <h4>High Tech</h4>
-                      <p>Complete traceability of components, materials, hardware and certification.</p>
-                    </div>
-                    <div className="dropdown-item">
-                      <h4>Retail</h4>
-                      <p>Automated inventory tracking and real-time multi-channel fulfillment.</p>
-                    </div>
-                    <div className="dropdown-item">
-                      <h4>Health Care</h4>
-                      <p>Delivering real-time reporting and location services to clinicians, patients and devices.</p>
-                    </div>
-                    <div className="dropdown-item">
-                      <h4>Energy & Utilities</h4>
-                      <p>Integrated track and trace of tools, equipment, personnel and process life cycles.</p>
-                    </div>
-                    <div className="dropdown-item">
-                      <h4>Grocery Retail</h4>
-                      <p>Inventory life cycle & excursion monitoring with sensors, notifications and compliance reporting.</p>
-                    </div>
-                    <div className="dropdown-item">
-                      <h4>Facility Management</h4>
-                      <p>Optimize equipment, fleet, people and process flow within a facility.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              </Link>
             </li>
             <li className="nav-item">
-              <button 
-                onClick={() => toggleDropdown('product')} 
-                className="nav-link nav-button"
-              >
+              <Link href="/product" className="nav-link nav-button">
                 Product
-              </button>
-              <div className={`dropdown-menu ${activeDropdown === 'product' ? 'active' : ''}`}>
-                <div className="dropdown-content">
-                  <div className="dropdown-grid">
-                    <div className="dropdown-item">
-                      <h4>Solutions</h4>
-                      <p>Comprehensive RFID and RTLS solutions</p>
-                    </div>
-                    <div className="dropdown-item">
-                      <h4>Components</h4>
-                      <p>Hardware and software components</p>
-                    </div>
-                    <div className="dropdown-item">
-                      <h4>Capabilities</h4>
-                      <p>Real-time tracking and analytics</p>
-                    </div>
-                    <div className="dropdown-item">
-                      <h4>How It Works</h4>
-                      <p>Understanding our technology platform</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              </Link>
             </li>
             <li className="nav-item">
-              <button 
-                onClick={() => toggleDropdown('applications')} 
-                className="nav-link nav-button"
-              >
+              <Link href="/applications" className="nav-link nav-button">
                 Applications
-              </button>
-              <div className={`dropdown-menu ${activeDropdown === 'applications' ? 'active' : ''}`}>
-                <div className="dropdown-content">
-                  <div className="dropdown-grid">
-                    <div className="dropdown-item">
-                      <h4>Inventory Management</h4>
-                      <p>Real-time asset tracking and visibility</p>
-                    </div>
-                    <div className="dropdown-item">
-                      <h4>Material Flow</h4>
-                      <p>Optimize material movement and processes</p>
-                    </div>
-                    <div className="dropdown-item">
-                      <h4>Personnel Flow</h4>
-                      <p>Track and manage workforce efficiency</p>
-                    </div>
-                    <div className="dropdown-item">
-                      <h4>Operational Efficiency</h4>
-                      <p>Improve operational performance metrics</p>
-                    </div>
-                    <div className="dropdown-item">
-                      <h4>Real Time Asset Tracking</h4>
-                      <p>Live location and status monitoring</p>
-                    </div>
-                    <div className="dropdown-item">
-                      <h4>Armory</h4>
-                      <p>Secure asset and equipment management</p>
-                    </div>
-                    <div className="dropdown-item">
-                      <h4>Security & Loss Prevention</h4>
-                      <p>Protect valuable assets and inventory</p>
-                    </div>
-                    <div className="dropdown-item">
-                      <h4>Preventative Maintenance</h4>
-                      <p>Proactive equipment maintenance scheduling</p>
-                    </div>
-                    <div className="dropdown-item">
-                      <h4>Compliance</h4>
-                      <p>Regulatory compliance and reporting</p>
-                    </div>
-                    <div className="dropdown-item">
-                      <h4>Linen Management</h4>
-                      <p>Track and manage textile assets</p>
-                    </div>
-                    <div className="dropdown-item">
-                      <h4>Tire Tracking</h4>
-                      <p>Monitor tire usage and maintenance</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              </Link>
             </li>
             <li className="nav-item">
-              <button 
-                onClick={() => {}} 
-                className="nav-link nav-button"
-              >
+              <Link href="/services" className="nav-link nav-button">
                 Services
-              </button>
+              </Link>
             </li>
             <li className="nav-item">
-              <button 
-                onClick={() => toggleDropdown('resources')} 
-                className="nav-link nav-button"
-              >
+              <Link href="/resources" className="nav-link nav-button">
                 Resources
-              </button>
-              <div className={`dropdown-menu ${activeDropdown === 'resources' ? 'active' : ''}`}>
-                <div className="dropdown-content">
-                  <div className="dropdown-grid">
-                    <div className="dropdown-item">
-                      <h4>Library</h4>
-                      <p>Documentation and technical resources</p>
-                    </div>
-                    <div className="dropdown-item">
-                      <h4>Press</h4>
-                      <p>Latest news and press releases</p>
-                    </div>
-                    <div className="dropdown-item">
-                      <h4>Careers</h4>
-                      <p>Join our growing team</p>
-                    </div>
-                    <div className="dropdown-item">
-                      <h4>Contact</h4>
-                      <p>Get in touch with our experts</p>
-                    </div>
-                    <div className="dropdown-item">
-                      <h4>About</h4>
-                      <p>Learn more about iVEDiX</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              </Link>
             </li>
           </ul>
         </nav>
-        
-        {/* Debug Info */}
-        <div style={{color: 'white', fontSize: '12px', marginRight: '20px'}}>
-          Active: {activeDropdown || 'none'}
-        </div>
         
         {/* Social Media Buttons */}
         <div className="social-buttons">
