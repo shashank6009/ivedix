@@ -262,6 +262,13 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
         const absY = Math.abs(e.deltaY);
         const absX = Math.abs(e.deltaX);
         if (absY > absX) {
+          const maxScrollLeft = scroller.scrollWidth - scroller.clientWidth;
+          const atStart = scroller.scrollLeft <= 0;
+          const atEnd = scroller.scrollLeft >= maxScrollLeft - 1;
+          // If we are at the edges, allow the page to scroll vertically
+          if ((e.deltaY < 0 && atStart) || (e.deltaY > 0 && atEnd)) {
+            return; // do not preventDefault -> let parent/page handle vertical scroll
+          }
           e.preventDefault();
           scroller.scrollLeft += e.deltaY;
         }

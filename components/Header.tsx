@@ -42,6 +42,11 @@ export default function Header() {
                 Services
               </Link>
             </li>
+            <li className="nav-item">
+              <Link href="/resources" className="nav-link nav-button">
+                Resources
+              </Link>
+            </li>
 
           </ul>
         </nav>

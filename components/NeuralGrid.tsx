@@ -58,6 +58,15 @@ export default function NeuralGrid({ items, onCardClick }: NeuralGridProps) {
     }
   }, []);
 
+  const handleCardMove = (e: React.MouseEvent<HTMLElement>) => {
+    const card = e.currentTarget as HTMLElement;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    card.style.setProperty('--mouse-x', `${x}px`);
+    card.style.setProperty('--mouse-y', `${y}px`);
+  };
+
   return (
     <div 
       ref={gridRef}
@@ -108,6 +117,7 @@ export default function NeuralGrid({ items, onCardClick }: NeuralGridProps) {
               '--gradient': item.gradient,
               '--animation-delay': `${index * 0.1}s`
             } as React.CSSProperties}
+            onMouseMove={handleCardMove}
             onClick={() => onCardClick(item)}
           >
             {/* Card Background with Morphing Effect */}
