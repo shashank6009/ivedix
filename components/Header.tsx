@@ -10,11 +10,13 @@ export default function Header() {
       <div className="header-content">
         {/* Logo */}
         <div className="logo-container">
-          <img 
-            src="/assets/logo.png" 
-            alt="iVedix Logo" 
-            className="logo"
-          />
+          <Link href="/" className="logo-link">
+            <img 
+              src="/assets/logo.png" 
+              alt="iVedix Logo" 
+              className="logo"
+            />
+          </Link>
         </div>
         
         {/* Navigation */}
@@ -40,11 +42,7 @@ export default function Header() {
                 Services
               </Link>
             </li>
-            <li className="nav-item">
-              <Link href="/resources" className="nav-link nav-button">
-                Resources
-              </Link>
-            </li>
+
           </ul>
         </nav>
         

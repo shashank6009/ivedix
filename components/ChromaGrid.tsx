@@ -213,14 +213,12 @@ const ChromaGrid: React.FC<ChromaGridProps> = ({
                   }
                 }}
                 style={{
-                  // @ts-expect-error CSS custom properties
                   '--card-border': c.borderColor || 'transparent',
-                  // @ts-expect-error CSS custom properties
                   '--card-gradient': c.gradient,
                   cursor: (c.onClick || c.url || onCardClick) ? 'pointer' : 'default',
                   flex: '0 0 320px',
                   maxWidth: '320px',
-                }}
+                } as React.CSSProperties}
               >
                 <div className="chroma-img-wrapper">
                   <img src={imgSrc} alt={c.title} loading="lazy" />
@@ -246,13 +244,10 @@ const ChromaGrid: React.FC<ChromaGridProps> = ({
       ref={rootRef}
       className={`chroma-grid ${className}`}
       style={{
-        // @ts-expect-error CSS custom properties
         '--r': `${radius}px`,
-        // @ts-expect-error CSS custom properties
         '--cols': columns,
-        // @ts-expect-error CSS custom properties
         '--rows': rows,
-      }}
+      } as React.CSSProperties}
       onPointerMove={handleMove}
       onPointerLeave={handleLeave}
     >
@@ -271,12 +266,10 @@ const ChromaGrid: React.FC<ChromaGridProps> = ({
             }
           }}
           style={{
-            // @ts-expect-error CSS custom properties
             '--card-border': c.borderColor || 'transparent',
-            // @ts-expect-error CSS custom properties
             '--card-gradient': c.gradient,
             cursor: (c.onClick || c.url || onCardClick) ? 'pointer' : 'default',
-          }}
+          } as React.CSSProperties}
         >
           <div className="chroma-img-wrapper">
             <img src={imgSrc} alt={c.title} loading="lazy" />

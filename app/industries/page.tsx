@@ -1,10 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import ChromaGrid from '../../components/ChromaGrid';
-import LightRays from '../../components/LightRays';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
+import NeuralGrid from '../../components/NeuralGrid';
 import IndustryModal from '../../components/IndustryModal';
 import { industriesData } from '../../data/industriesData';
+import industrybg from '../../assets/industrybg.png';
 import energy from '../../assets/energy.png';
 import facility from '../../assets/facility.png';
 import govt from '../../assets/govt.png';
@@ -37,130 +39,120 @@ export default function IndustriesPage() {
 
   const items = [
     {
+      id: 'energy',
       image: energy,
       title: 'Energy',
       subtitle: 'Power & Utilities',
-      handle: '',
       borderColor: '#f97316',
       gradient: 'linear-gradient(145deg, #0a0a0a, #111827)',
-      url: '',
       onClick: () => {
         setSelectedIndustry(industryDataWithImages.energy);
         setIsModalOpen(true);
       }
     },
     {
+      id: 'facility',
       image: facility,
       title: 'Facilities',
       subtitle: 'Facility Management',
-      handle: '',
       borderColor: '#22c55e',
       gradient: 'linear-gradient(210deg, #0a0a0a, #111827)',
-      url: '',
       onClick: () => {
         setSelectedIndustry(industryDataWithImages.facility);
         setIsModalOpen(true);
       }
     },
     {
+      id: 'government',
       image: govt,
       title: 'Government',
       subtitle: 'Public Sector',
-      handle: '',
       borderColor: '#3b82f6',
       gradient: 'linear-gradient(165deg, #0a0a0a, #111827)',
-      url: '',
       onClick: () => {
         setSelectedIndustry(industryDataWithImages.government);
         setIsModalOpen(true);
       }
     },
     {
+      id: 'grocery',
       image: grocery,
       title: 'Grocery',
       subtitle: 'Retail Grocery',
-      handle: '',
       borderColor: '#a855f7',
       gradient: 'linear-gradient(195deg, #0a0a0a, #111827)',
-      url: '',
       onClick: () => {
         setSelectedIndustry(industryDataWithImages.grocery);
         setIsModalOpen(true);
       }
     },
     {
+      id: 'healthcare',
       image: healthcare,
       title: 'Healthcare',
       subtitle: 'Health Systems',
-      handle: '',
       borderColor: '#ef4444',
       gradient: 'linear-gradient(225deg, #0a0a0a, #111827)',
-      url: '',
       onClick: () => {
         setSelectedIndustry(industryDataWithImages.healthcare);
         setIsModalOpen(true);
       }
     },
     {
+      id: 'hightech',
       image: hightech,
       title: 'High Tech',
       subtitle: 'Technology & Software',
-      handle: '',
       borderColor: '#06b6d4',
       gradient: 'linear-gradient(135deg, #0a0a0a, #111827)',
-      url: '',
       onClick: () => {
         setSelectedIndustry(industryDataWithImages.highTech);
         setIsModalOpen(true);
       }
     },
     {
+      id: 'manufacturing',
       image: manufacturing,
       title: 'Manufacturing',
       subtitle: 'Industrial & Process',
-      handle: '',
       borderColor: '#fde047',
       gradient: 'linear-gradient(165deg, #0a0a0a, #111827)',
-      url: '',
       onClick: () => {
         setSelectedIndustry(industryDataWithImages.manufacturing);
         setIsModalOpen(true);
       }
     },
     {
+      id: 'retail',
       image: retail,
       title: 'Retail',
       subtitle: 'E-commerce & Stores',
-      handle: '',
       borderColor: '#f59e0b',
       gradient: 'linear-gradient(145deg, #0a0a0a, #111827)',
-      url: '',
       onClick: () => {
         setSelectedIndustry(industryDataWithImages.retail);
         setIsModalOpen(true);
       }
     },
     {
+      id: 'supply',
       image: supply,
       title: 'Supply Chain',
       subtitle: 'Logistics & Transport',
-      handle: '',
       borderColor: '#84cc16',
       gradient: 'linear-gradient(210deg, #0a0a0a, #111827)',
-      url: '',
       onClick: () => {
         setSelectedIndustry(industryDataWithImages.supplyChain);
         setIsModalOpen(true);
       }
     },
     {
+      id: 'warehouse',
       image: warehouse,
       title: 'Warehouse',
       subtitle: 'Operations & Storage',
-      handle: '',
       borderColor: '#22c55e',
       gradient: 'linear-gradient(225deg, #0a0a0a, #111827)',
-      url: '',
       onClick: () => {
         setSelectedIndustry(industryDataWithImages.warehouse);
         setIsModalOpen(true);
@@ -175,116 +167,62 @@ export default function IndustriesPage() {
   };
 
   return (
-    <main style={{ 
-      background: '#000', 
-      minHeight: '100vh', 
-      width: '100vw',
-      paddingTop: '120px',
-      overflow: 'auto',
-      position: 'relative'
-    }}>
-      {/* Page Title */}
-      <div style={{
-        position: 'absolute',
-        top: '80px',
-        left: '32px',
-        zIndex: 1
-      }}>
-        <h1 style={{
-          margin: 0,
-          fontFamily: 'Playfair Display, serif',
-          fontWeight: 700,
-          letterSpacing: '0.06em',
-          textTransform: 'uppercase',
-          fontSize: '2.5rem',
-          color: '#ffffff',
-          textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)'
-        }}>industries</h1>
-      </div>
-      <section style={{
-        display: 'flex', 
-        alignItems: 'flex-start', 
-        justifyContent: 'flex-start',
-        height: 'calc(100vh - 120px)', 
-        width: '100%',
-        paddingTop: '0px'
-      }}>
-        <div style={{ 
-          height: '100%', 
-          width: '100%',
-          position: 'relative',
-          display: 'flex',
-          alignItems: 'flex-start',
-          justifyContent: 'flex-start',
-          paddingLeft: '32px',
-          paddingTop: '40px',
-          boxSizing: 'border-box'
-        }}>
-          <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-            <LightRays
-              raysOrigin="top-center"
-              raysColor="#00ffff"
-              raysSpeed={1.5}
-              lightSpread={0.8}
-              rayLength={1.2}
-              followMouse={true}
-              mouseInfluence={0.1}
-              noiseAmount={0.1}
-              distortion={0.05}
-            />
-          </div>
-          <ChromaGrid 
-            items={items}
-            radius={300}
-            damping={0.4}
-            fadeOut={0.6}
-            ease="power3.out"
-            horizontal
-            visible={6}
-            onCardClick={handleCardClick}
-          />
-        </div>
-      </section>
-
-      {/* Industries Video Section */}
-      <section style={{
-        width: '100%',
-        padding: '4rem 2rem',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}>
-        <div style={{
-          maxWidth: '1200px',
-          width: '100%',
-          textAlign: 'center'
-        }}>
-          <video 
+    <>
+      <Header />
+      <main className="industries-hero-section">
+        {/* Hero Section with Background */}
+        <section className="industries-hero">
+          <div 
+            className="industries-hero-background"
             style={{
-              width: '100%',
-              maxWidth: '800px',
-              height: 'auto',
-              borderRadius: '16px',
-              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)'
+              background: `url(${industrybg.src}) center center/cover no-repeat`
             }}
-            controls
-            autoPlay
-            muted
-            loop
-            playsInline
           >
-            <source src="/assets/industries_vid.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        </div>
-      </section>
+            <div className="industries-hero-overlay"></div>
+          </div>
+          
+          {/* Hero Content */}
+          <div className="industries-hero-content">
+            <h1 className="industries-hero-title">
+              Industries We Serve
+            </h1>
+            <p className="industries-hero-subtitle">
+              Transforming businesses across sectors with cutting-edge technology solutions
+            </p>
+          </div>
+        </section>
+        
+        {/* Neural Network Grid Section */}
+        <NeuralGrid 
+          items={items}
+          onCardClick={handleCardClick}
+        />
 
-      {/* Industry Modal */}
-      <IndustryModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        industry={selectedIndustry}
-      />
-    </main>
+        {/* Industries Video Section */}
+        <section className="industries-video-section">
+          <div className="industries-video-container">
+            <video 
+              className="industries-video"
+              controls
+              autoPlay
+              muted
+              loop
+              playsInline
+            >
+              <source src="/assets/industries_vid.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </section>
+
+        {/* Industry Modal */}
+        <IndustryModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          industry={selectedIndustry}
+        />
+      </main>
+      <Footer />
+    </>
   );
 }
