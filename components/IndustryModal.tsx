@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 
 export interface IndustryModalProps {
@@ -41,6 +41,8 @@ export const IndustryModal: React.FC<IndustryModalProps> = ({
   const modalRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
+  const [activeSection, setActiveSection] = useState<string>('');
 
   useEffect(() => {
     if (isOpen) {
@@ -76,6 +78,65 @@ export const IndustryModal: React.FC<IndustryModalProps> = ({
     }
   };
 
+  // Reading progress indicator
+  useEffect(() => {
+    const el = contentRef.current;
+    const progress = progressRef.current;
+    if (!el || !progress) return;
+    const onScroll = () => {
+      const max = el.scrollHeight - el.clientHeight;
+      const ratio = max > 0 ? el.scrollTop / max : 0;
+      progress.style.transform = `scaleX(${Math.min(1, Math.max(0, ratio))})`;
+    };
+    el.addEventListener('scroll', onScroll);
+    onScroll();
+    return () => el.removeEventListener('scroll', onScroll);
+  }, [isOpen]);
+
+  // TOC chips + active section tracking
+  const isManufacturing = !!industry?.title?.toLowerCase().includes('manufacturing');
+  const tocItems = isManufacturing
+    ? [
+        { id: 'overview-diagram', label: 'Overview' },
+        { id: 'rfid-future', label: 'RFID Future' },
+      ]
+    : [
+        { id: 'overview', label: 'Overview' },
+        { id: 'trends', label: 'Trends' },
+        { id: 'analysis', label: 'Analysis' },
+      ];
+
+  const scrollTo = (id: string) => {
+    const root = contentRef.current;
+    if (!root) return;
+    const el = root.querySelector(`#${id}`) as HTMLElement | null;
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  useEffect(() => {
+    const root = contentRef.current;
+    if (!root) return;
+    const sections = tocItems
+      .map((i) => root.querySelector(`#${i.id}`))
+      .filter(Boolean) as Element[];
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]) {
+          setActiveSection((visible[0].target as HTMLElement).id);
+        }
+      },
+      { root, threshold: [0.5, 0.75] }
+    );
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const imgSrc = typeof industry.image === 'string' ? industry.image : (industry.image as any)?.src || '';
@@ -104,14 +165,31 @@ export const IndustryModal: React.FC<IndustryModalProps> = ({
               </svg>
             </button>
           </div>
+          {/* Reading progress bar */}
+          <div className="modal-progress">
+            <div ref={progressRef} className="modal-progress-fill"></div>
+          </div>
         </div>
 
         {/* Content */}
         <div ref={contentRef} className="modal-content">
+          {/* TOC Chips */}
+          <nav className="modal-toc" aria-label="Sections">
+            {tocItems.map((item) => (
+              <button
+                key={item.id}
+                className={`toc-chip ${activeSection === item.id ? 'active' : ''}`}
+                onClick={() => scrollTo(item.id)}
+                type="button"
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
           {/* SVG Content for Manufacturing */}
           {(industry.title === 'Manufacturing' || industry.title === 'manufacturing' || industry.title?.toLowerCase().includes('manufacturing')) ? (
             <>
-              <div className="svg-content-section">
+              <div id="overview-diagram" className="svg-content-section anchor">
                 <div className="svg-container">
                   <img
                     src="/assets/manufacturing-diagram.svg?v=1"
@@ -122,7 +200,7 @@ export const IndustryModal: React.FC<IndustryModalProps> = ({
               </div>
               
               {/* RFID Future Content */}
-              <div className="rfid-future-section">
+              <div id="rfid-future" className="rfid-future-section anchor">
                 <h3 className="rfid-future-title">The Future of RFID in Manufacturing</h3>
                 
                 <div className="rfid-benefits-grid">
@@ -203,13 +281,13 @@ export const IndustryModal: React.FC<IndustryModalProps> = ({
           ) : (
             <>
               {/* Overview Section */}
-              <div className="content-section">
+              <div id="overview" className="content-section anchor">
                 <h3 className="section-title">Overview</h3>
                 <p className="overview-text">{industry.content.overview}</p>
               </div>
 
               {/* Key Trends */}
-              <div className="content-section">
+              <div id="trends" className="content-section anchor">
                 <h3 className="section-title">Key Trends & Opportunities</h3>
                 <div className="trends-grid">
                   {industry.content.trends.map((trend, index) => (
@@ -232,7 +310,7 @@ export const IndustryModal: React.FC<IndustryModalProps> = ({
               </div>
 
               {/* Detailed Analysis */}
-              <div className="content-section">
+              <div id="analysis" className="content-section anchor">
                 <h3 className="section-title">Detailed Analysis</h3>
                 <div className="analysis-list">
                   {industry.content.detailedAnalysis.map((analysis, index) => (
@@ -269,6 +347,12 @@ export const IndustryModal: React.FC<IndustryModalProps> = ({
               </div>
             </>
           )}
+        </div>
+        {/* Sticky CTA */}
+        <div className="modal-sticky-cta">
+          <button type="button" className="cta-button" onClick={handleClose}>
+            Talk to an expert
+          </button>
         </div>
       </div>
     </div>

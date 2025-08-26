@@ -1420,6 +1420,23 @@ html {
   min-height: 100vh;
 }
 
+/* Fixed wordmark top-left */
+.industries-wordmark {
+  position: fixed;
+  top: 22px;
+  left: 24px;
+  z-index: 9999;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  color: #ffffff;
+  font-size: 1.4rem;
+  line-height: 1;
+  opacity: 0.9;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.45);
+}
+
 .industries-hero {
   position: relative;
   height: 60vh;
@@ -1450,6 +1467,14 @@ html {
   z-index: 2;
 }
 
+.industries-light-rays {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.55;
+  mix-blend-mode: screen;
+}
+
 .industries-hero-content {
   position: relative;
   z-index: 3;
@@ -1457,6 +1482,9 @@ html {
   max-width: 800px;
   padding: 0 2rem;
 }
+
+/* Cursor halo for industries page */
+/* restore default cursor by removing custom halo */
 
 .industries-hero-title {
   font-size: 4rem;
@@ -1660,6 +1688,11 @@ html {
   max-width: 1400px;
   margin: 0 auto;
   min-height: 80vh;
+  /* Edge fade for premium feel */
+  mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%),
+               linear-gradient(to bottom, transparent 0%, black 4%, black 96%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%),
+                      linear-gradient(to bottom, transparent 0%, black 4%, black 96%, transparent 100%);
 }
 
 /* Grid positioning for 10 cards */
@@ -1680,7 +1713,7 @@ html {
   border-radius: 16px;
   cursor: pointer;
   overflow: hidden;
-  transform: translateY(100px) scale(0.8);
+  transform: translateY(100px) scale(0.8) perspective(800px) rotateX(0deg) rotateY(0deg);
   opacity: 0;
   animation: neuralCardEntrance 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   animation-delay: var(--animation-delay);
@@ -1886,7 +1919,7 @@ html {
 
 /* Hover Effects */
 .neural-card:hover {
-  transform: translateY(-8px) scale(1.02);
+  transform: translateY(-8px) scale(1.02) perspective(800px) rotateX(2deg) rotateY(2deg);
   z-index: 10;
 }
 
@@ -1947,6 +1980,27 @@ html {
 
 .neural-card:hover .neural-glow {
   opacity: 0.6;
+}
+/* Progress dots beneath grid */
+.neural-progress {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.neural-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
+  transition: all 0.3s ease;
+}
+
+.neural-dot.active {
+  background: linear-gradient(135deg, #FF8C00, #32CD32);
+  box-shadow: 0 0 14px rgba(255,140,0,0.35);
 }
 
 .neural-card:hover .particle {
@@ -2056,31 +2110,42 @@ html {
 }
 
 .industry-modal {
-  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 24px;
+  background: #0b0b0c;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
   max-width: 1200px;
   width: 100%;
   max-height: 90vh;
   overflow: hidden;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
   position: relative;
 }
 
-.industry-modal::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 140, 0, 0.5), transparent);
-}
+.industry-modal::before { content: none; }
 
 .modal-header {
-  background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 2rem 2.5rem 1.5rem;
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1.75rem 2rem 1.25rem;
+}
+
+/* Modal reading progress */
+.modal-progress {
+  position: relative;
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+  border-radius: 1px;
+}
+
+.modal-progress-fill {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255,140,0,0.9), rgba(50,205,50,0.9));
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 0.15s ease-out;
 }
 
 .modal-header-content {
@@ -2095,15 +2160,12 @@ html {
 }
 
 .modal-title {
-  font-size: 2.5rem;
+  font-size: 2.4rem;
   font-weight: 700;
   color: #ffffff;
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.25rem 0;
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #FF8C00, #32CD32);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  letter-spacing: -0.01em;
 }
 
 .modal-subtitle {
@@ -2115,23 +2177,23 @@ html {
 }
 
 .modal-close-btn {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 12px;
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .modal-close-btn:hover {
-  background: rgba(255, 140, 0, 0.2);
-  border-color: rgba(255, 140, 0, 0.5);
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.24);
 }
 
 /* SVG Content Styles */
@@ -2178,10 +2240,7 @@ html {
   text-align: center;
   margin-bottom: 2.5rem;
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #FF8C00, #32CD32);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  letter-spacing: -0.01em;
 }
 
 .rfid-benefits-grid {
@@ -2192,8 +2251,8 @@ html {
 }
 
 .rfid-benefit-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   padding: 1.5rem;
   transition: all 0.3s ease;
@@ -2207,8 +2266,8 @@ html {
   top: 0;
   left: 0;
   right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #FF8C00, #32CD32);
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255,140,0,0.4), rgba(50,205,50,0.4));
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -2305,6 +2364,8 @@ html {
   overflow-y: auto;
 }
 
+.modal-content .anchor { scroll-margin-top: 120px; }
+
 .modal-content::-webkit-scrollbar {
   width: 8px;
 }
@@ -2317,6 +2378,34 @@ html {
 .modal-content::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, #FF8C00, #32CD32);
   border-radius: 4px;
+}
+
+/* TOC chips */
+.modal-toc {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin: 0 0 1rem 0;
+}
+
+.toc-chip {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.9);
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.toc-chip:hover {
+  border-color: rgba(255, 140, 0, 0.4);
+}
+
+.toc-chip.active {
+  background: rgba(255, 140, 0, 0.18);
+  border-color: rgba(255, 140, 0, 0.45);
 }
 
 .content-section {
@@ -2398,11 +2487,23 @@ html {
 }
 
 .trend-title {
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   font-weight: 600;
-  color: #FF8C00;
+  color: #ffffff;
   margin: 0 0 1rem 0;
   font-family: 'Inter', sans-serif;
+  letter-spacing: 0.005em;
+}
+
+.trend-title::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255,140,0,0.9), rgba(50,205,50,0.9));
+  margin-right: 8px;
+  transform: translateY(-1px);
 }
 
 .trend-description {
@@ -2484,9 +2585,9 @@ html {
 }
 
 .analysis-section h5 {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 600;
-  color: #FF8C00;
+  color: #e5e7eb;
   margin: 0 0 1rem 0;
   font-family: 'Inter', sans-serif;
 }
@@ -2561,6 +2662,34 @@ html {
   color: #32CD32;
   font-weight: 700;
   font-family: 'Inter', sans-serif;
+}
+
+/* Sticky CTA */
+.modal-sticky-cta {
+  position: sticky;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(26,26,26,0.0), rgba(26,26,26,0.9));
+  padding: 1rem 2rem 1.25rem;
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.cta-button {
+  background: linear-gradient(135deg, #FF8C00, #32CD32);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 0.8rem 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(255,140,0,0.25);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cta-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 36px rgba(255,140,0,0.3);
 }
 
 /* Responsive Design */
@@ -5620,3 +5749,13 @@ html {
 
 @media (max-width: 980px) { .press-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 640px) { .press-grid { grid-template-columns: 1fr; } .press-thumb { height: 160px; } .press-hero-section { margin-top: 110px; height: 40vh; } }
+
+/* Mobile refinements */
+@media (max-width: 768px) {
+  .industries-wordmark { font-size: 1.1rem; top: 18px; left: 18px; }
+  .industries-hero-title { font-size: 2.6rem; }
+  .industries-hero-subtitle { font-size: 1rem; }
+  .neural-grid { padding: 2rem 1rem; }
+  .neural-grid-container { gap: 1.25rem; }
+  .cursor-halo { display: none; }
+}

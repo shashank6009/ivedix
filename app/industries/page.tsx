@@ -5,6 +5,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import NeuralGrid from '../../components/NeuralGrid';
 import IndustryModal from '../../components/IndustryModal';
+import LightRays from '../../components/LightRays';
 import { industriesData } from '../../data/industriesData';
 import industrybg from '../../assets/industrybg.png';
 import energy from '../../assets/energy.png';
@@ -21,6 +22,7 @@ import warehouse from '../../assets/warehouse.png';
 export default function IndustriesPage() {
   const [selectedIndustry, setSelectedIndustry] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // removed custom cursor halo
 
   // Set images for each industry
   const industryDataWithImages = {
@@ -166,9 +168,13 @@ export default function IndustriesPage() {
     }
   };
 
+  // no-op
+
   return (
     <>
       <Header />
+      {/* Fixed wordmark */}
+      <div className="industries-wordmark">industries</div>
       <main className="industries-hero-section">
         {/* Hero Section with Background */}
         <section className="industries-hero">
@@ -179,6 +185,22 @@ export default function IndustriesPage() {
             }}
           >
             <div className="industries-hero-overlay"></div>
+            {/* Refined LightRays background layer */}
+            <LightRays
+              className="industries-light-rays"
+              raysOrigin="top-left"
+              raysColor="#ffffff"
+              raysSpeed={0.5}
+              lightSpread={1.4}
+              rayLength={1.6}
+              pulsating={false}
+              fadeDistance={1.2}
+              saturation={0.5}
+              followMouse={true}
+              mouseInfluence={0.07}
+              noiseAmount={0.05}
+              distortion={0.03}
+            />
           </div>
           
           {/* Hero Content */}
@@ -197,6 +219,7 @@ export default function IndustriesPage() {
           items={items}
           onCardClick={handleCardClick}
         />
+
 
         {/* Industries Video Section */}
         <section className="industries-video-section">

@@ -22,6 +22,7 @@ export default function NeuralGrid({ items, onCardClick }: NeuralGridProps) {
   const gridRef = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState<number>(-1);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -66,6 +67,9 @@ export default function NeuralGrid({ items, onCardClick }: NeuralGridProps) {
     card.style.setProperty('--mouse-x', `${x}px`);
     card.style.setProperty('--mouse-y', `${y}px`);
   };
+
+  const rowCount = 3;
+  const activeRow = hoveredIndex >= 0 ? Math.min(rowCount - 1, Math.floor(hoveredIndex / 4)) : -1;
 
   return (
     <div 
@@ -118,6 +122,8 @@ export default function NeuralGrid({ items, onCardClick }: NeuralGridProps) {
               '--animation-delay': `${index * 0.1}s`
             } as React.CSSProperties}
             onMouseMove={handleCardMove}
+            onMouseEnter={() => setHoveredIndex(index)}
+            onMouseLeave={() => setHoveredIndex(-1)}
             onClick={() => onCardClick(item)}
           >
             {/* Card Background with Morphing Effect */}
@@ -161,6 +167,12 @@ export default function NeuralGrid({ items, onCardClick }: NeuralGridProps) {
               ))}
             </div>
           </div>
+        ))}
+      </div>
+      {/* Progress Dots */}
+      <div className="neural-progress" aria-hidden="true">
+        {Array.from({ length: rowCount }).map((_, i) => (
+          <span key={i} className={`neural-dot ${activeRow === i ? 'active' : ''}`}></span>
         ))}
       </div>
     </div>
