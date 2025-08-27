@@ -2,43 +2,11 @@
 
 import React, { useRef, useState } from 'react';
 import Header from '../../components/Header';
-import Footer from '../../components/Footer';
+import OrbitNav from '../../components/OrbitNav';
 
 export default function ServicesPage() {
   const heroRef = useRef<HTMLDivElement>(null);
-  const [activeCardIndex, setActiveCardIndex] = useState(0);
-  const listRef = useRef<HTMLDivElement>(null);
-
-  // Track which service card is closest to viewport center to sync summary
-  React.useEffect(() => {
-    const updateActiveTop = () => {
-      if (!listRef.current) return;
-      const container = listRef.current;
-      const containerRect = container.getBoundingClientRect();
-      const cards = Array.from(container.querySelectorAll<HTMLElement>('.service-card'));
-      if (cards.length === 0) return;
-
-      let bestIdx = 0;
-      let bestDelta = Number.POSITIVE_INFINITY;
-      for (let i = 0; i < cards.length; i++) {
-        const r = cards[i].getBoundingClientRect();
-        const delta = Math.abs(r.top - containerRect.top - 16); // 16px offset padding
-        if (r.bottom > containerRect.top + 16 && r.top < window.innerHeight) {
-          if (delta < bestDelta) { bestDelta = delta; bestIdx = i; }
-        }
-      }
-      setActiveCardIndex(bestIdx);
-    };
-
-    const onScroll = () => requestAnimationFrame(updateActiveTop);
-    updateActiveTop();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', updateActiveTop);
-    return () => {
-      window.removeEventListener('scroll', onScroll as any);
-      window.removeEventListener('resize', updateActiveTop as any);
-    };
-  }, []);
+  const [peek, setPeek] = useState(false);
 
   const servicesData = [
     {
@@ -133,73 +101,24 @@ export default function ServicesPage() {
     }
   ];
 
-  // Display order: increment by 1 so last card moves to the first position
-  const displayedServices = React.useMemo(() => {
-    const arr = [...servicesData];
-    if (arr.length === 0) return arr;
-    const last = arr[arr.length - 1];
-    return [last, ...arr.slice(0, arr.length - 1)];
-  }, [servicesData]);
-
-  // Rotate summary: show next-in-order relative to currently focused displayed card
-  const rotatedIndex = (activeCardIndex + 1) % displayedServices.length;
+  // Orbit-only hero; deep details are shown inline on hover/click
 
   return (
-    <div className="services-page">
+    <div className={`services-page${peek ? ' peek' : ''}`} onMouseMove={(e) => {
+      setPeek(e.clientY <= 24);
+    }}>
       <Header />
       
-      {/* Hero Section */}
-      <section ref={heroRef} className="services-hero-section">
-        <div className="services-hero-background" style={{ backgroundImage: 'url(/assets/services.png)' }}>
-          <div className="services-hero-overlay"></div>
-        </div>
-        <div className="services-hero-content">
-          <div className="breadcrumb">
-            <span className="breadcrumb-text">Home &gt; Services</span>
-          </div>
-          <h1 className="services-hero-title">
-            Services
-          </h1>
-          <p className="services-hero-subtitle">
-            Comprehensive IoT solutions and expertise to transform your business
-          </p>
-        </div>
+      {/* Orbit Navigator Hero */}
+      <section className="services-orbit-hero">
+        <OrbitNav
+          items={servicesData.map((s) => ({ id: s.id, name: s.name, img: s.img, description: s.description }))}
+          onSelect={() => { /* click handled inside orbit hero for now */ }}
+        />
       </section>
 
-      {/* Services Split Layout */}
-      <section className="services-split-section">
-        <div className="services-split-container">
-          {/* Left: Sticky Summary */}
-          <aside className="services-sticky-summary">
-            <div className="summary-inner">
-              <div className="summary-breadcrumb">Services</div>
-              <h2 className="summary-title">{displayedServices[rotatedIndex]?.name}</h2>
-              <p className="summary-subtitle">{displayedServices[rotatedIndex]?.description}</p>
-              <div className="summary-cta">
-                <button className="cta-primary">Get a demo</button>
-                <button className="cta-ghost">See platform</button>
-              </div>
-            </div>
-          </aside>
+      {/* Orbit-only layout (bottom section removed) */}
 
-          {/* Right: Vertical Showcase */}
-          <div ref={listRef} className="services-vertical">
-            {displayedServices.map((svc, idx) => (
-              <article key={svc.id} className="service-card" data-index={idx}>
-                <div className="service-card-media">
-                  <img src={svc.img} alt={svc.name} loading="lazy" />
-                </div>
-                <div className="service-card-body">
-                  <h3 className="service-card-title">{svc.name}</h3>
-                  <p className="service-card-desc">{svc.description}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <Footer />
     </div>
   );
 }

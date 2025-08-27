@@ -1,3 +1,11 @@
+/* Services Orbit Hero fullscreen */
+.services-orbit-hero {
+  min-height: 100vh;
+  display: grid;
+  align-items: stretch;
+  background: #000000;
+  overflow: hidden;
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -1644,6 +1652,625 @@ html {
   background: #000000;
   padding: 4rem 0 6rem;
 }
+/* Orbit Navigator - Premium Redesign */
+.orbit-nav {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: 
+    radial-gradient(ellipse 1600px 800px at 30% 20%, rgba(147, 51, 234, 0.25) 0%, transparent 50%),
+    radial-gradient(ellipse 1400px 700px at 70% 80%, rgba(236, 72, 153, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse 1800px 900px at 50% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 60%),
+    linear-gradient(180deg, #0a0618 0%, #000000 100%);
+  border-bottom: none;
+  animation: aurora-shift 25s ease-in-out infinite;
+}
+
+@keyframes aurora-shift {
+  0%, 100% { 
+    background-position: 0% 0%, 100% 100%, 50% 50%, 0% 0%;
+    background-size: 150% 150%, 150% 150%, 200% 200%, 100% 100%;
+  }
+  33% { 
+    background-position: 100% 0%, 0% 100%, 50% 50%, 0% 0%;
+    background-size: 180% 180%, 180% 180%, 250% 250%, 100% 100%;
+  }
+  66% { 
+    background-position: 50% 50%, 50% 50%, 0% 100%, 0% 0%;
+    background-size: 200% 200%, 200% 200%, 180% 180%, 100% 100%;
+  }
+}
+
+/* Floating particles effect */
+.orbit-nav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(2px 2px at 20% 30%, white, transparent),
+    radial-gradient(2px 2px at 60% 70%, white, transparent),
+    radial-gradient(1px 1px at 90% 10%, white, transparent),
+    radial-gradient(1px 1px at 15% 80%, white, transparent);
+  background-size: 200% 200%;
+  animation: particle-float 40s linear infinite;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+@keyframes particle-float {
+  from { transform: translateY(0) translateX(0); }
+  to { transform: translateY(-100vh) translateX(-100px); }
+}
+
+.orbit-bg { 
+  opacity: 0.3; 
+  mix-blend-mode: screen; 
+  filter: saturate(1.3) contrast(1.1);
+}
+
+.orbit-center { 
+  position: absolute; 
+  inset: 0; 
+  display: grid; 
+  place-content: center; 
+  text-align: center; 
+  z-index: 5; 
+  pointer-events: none; 
+}
+
+.orbit-title { 
+  font-size: clamp(3.5rem, 7vw, 6rem); 
+  font-weight: 900; 
+  letter-spacing: -0.03em;
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #e0e0ff 25%,
+    #ffffff 50%,
+    #ffeef8 75%,
+    #ffffff 100%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-wave 8s ease-in-out infinite;
+  filter: drop-shadow(0 0 40px rgba(147, 51, 234, 0.4));
+  text-shadow: 0 0 80px rgba(147, 51, 234, 0.3);
+}
+
+@keyframes gradient-wave {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.orbit-sub { 
+  color: rgba(255,255,255,0.7); 
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-weight: 300;
+  animation: subtle-pulse 4s ease-in-out infinite;
+}
+
+@keyframes subtle-pulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.02); }
+}
+
+/* Premium Hover Scroll Zones */
+.orbit-scroll { 
+  position: absolute; 
+  left: 50%; 
+  transform: translateX(-50%);
+  width: 200px;
+  height: 50px;
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  background: linear-gradient(90deg, transparent, rgba(147, 51, 234, 0.1), transparent);
+  color: rgba(255,255,255,0.5); 
+  border: 1px solid rgba(147, 51, 234, 0.2);
+  border-radius: 50px;
+  outline: none; 
+  cursor: pointer; 
+  z-index: 500; 
+  font-weight: 600; 
+  letter-spacing: 0.15em; 
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.orbit-scroll-left { 
+  top: 35%; 
+}
+
+.orbit-scroll-right { 
+  bottom: 35%; 
+}
+
+.orbit-scroll:hover { 
+  color: #fff;
+  background: linear-gradient(90deg, transparent, rgba(147, 51, 234, 0.3), transparent);
+  border-color: rgba(147, 51, 234, 0.6);
+  box-shadow: 
+    0 0 40px rgba(147, 51, 234, 0.4),
+    inset 0 0 20px rgba(147, 51, 234, 0.1);
+  transform: translateX(-50%) scale(1.05);
+}
+
+.orbit-scroll::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  transform: translateY(-50%);
+  border: 2px solid currentColor;
+  border-right: none;
+  border-bottom: none;
+}
+
+.orbit-scroll-left::before {
+  left: 25px;
+  transform: translateY(-50%) rotate(-45deg);
+}
+
+.orbit-scroll-right::before {
+  right: 25px;
+  transform: translateY(-50%) rotate(135deg);
+}
+
+.orbit-node { 
+  position: absolute; 
+  transform: translate3d(-50%, -50%, 0); 
+  border: none; 
+  background: transparent; 
+  cursor: pointer;
+  display: inline-flex; 
+  align-items: center; 
+  gap: 10px; 
+  padding: 8px 10px; 
+  border-radius: 999px;
+  color: rgba(255,255,255,0.9); 
+  font-weight: 600;
+  z-index: 10;
+}
+.orbit-node:hover { color: #fff; }
+.orbit-dot { display:none; }
+.orbit-label { display:none; }
+
+/* Animated orbit card using provided CSS idea */
+.orbit-card {
+  --card-radius: 20px;
+  --card-width: 240px;
+  position: relative;
+  width: var(--card-width);
+  aspect-ratio: 1.6/1;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  border-radius: var(--card-radius);
+  border: none;
+  transform-style: preserve-3d;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.orbit-card > .orbit-inner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(135deg, rgba(147, 51, 234, 0.15) 0%, transparent 60%),
+    linear-gradient(225deg, rgba(236, 72, 153, 0.15) 0%, transparent 60%),
+    rgba(10, 6, 24, 0.95);
+  backdrop-filter: blur(20px) saturate(1.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--card-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 1.5rem;
+  overflow: hidden;
+  box-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.5);
+}
+
+.orbit-card > .orbit-inner span:first-child {
+  display: block;
+  padding: 0.4em 0.8em;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.3), rgba(236, 72, 153, 0.3));
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.orbit-card > .orbit-inner span:last-child {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffffff, #e0e0ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+/* Holographic shimmer overlay */
+.orbit-card > .orbit-inner::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.7) 45%,
+    rgba(147, 51, 234, 0.5) 47.5%,
+    rgba(236, 72, 153, 0.5) 50%,
+    rgba(255, 255, 255, 0.7) 52.5%,
+    transparent 57%
+  );
+  animation: holographic-sweep 4s infinite;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+@keyframes holographic-sweep {
+  0% { transform: translateX(-100%) rotate(25deg); }
+  100% { transform: translateX(200%) rotate(25deg); }
+}
+
+/* Glass refraction effect */
+.orbit-card > .orbit-inner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 255, 255, 0.15) 0%,
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  border-radius: var(--card-radius);
+}
+
+/* Premium glow effect */
+.orbit-card .glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  height: 150%;
+  transform: translate(-50%, -50%);
+  background: 
+    radial-gradient(
+      closest-side,
+      rgba(147, 51, 234, 0.4),
+      rgba(236, 72, 153, 0.2) 40%,
+      transparent 70%
+    );
+  opacity: 0;
+  transition: opacity 0.6s;
+  pointer-events: none;
+  filter: blur(40px);
+  animation: glow-rotate 10s linear infinite;
+}
+
+@keyframes glow-rotate {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Premium hover states */
+.orbit-node:hover > .orbit-card {
+  transform: scale(1.1) translateZ(50px);
+}
+
+.orbit-node:hover > .orbit-card > .orbit-inner {
+  background: 
+    linear-gradient(135deg, rgba(147, 51, 234, 0.2) 0%, transparent 60%),
+    linear-gradient(225deg, rgba(236, 72, 153, 0.2) 0%, transparent 60%),
+    rgba(10, 6, 24, 0.95);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 30px 80px rgba(147, 51, 234, 0.6),
+    0 0 120px rgba(236, 72, 153, 0.4),
+    inset 0 0 30px rgba(255, 255, 255, 0.1),
+    0 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+.orbit-node:hover > .orbit-card > .orbit-inner::after {
+  opacity: 1;
+}
+
+.orbit-node:hover > .orbit-card .glow {
+  opacity: 1;
+  filter: blur(60px);
+  animation: glow-pulse 2s ease-in-out infinite, glow-rotate 10s linear infinite;
+}
+
+@keyframes glow-pulse {
+  0%, 100% { 
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+  }
+  50% { 
+    transform: translate(-50%, -50%) scale(1.3) rotate(180deg);
+  }
+}
+
+@keyframes rotate-bg { 0% { --bg-x: 0; --bg-y: 0; } 25% { --bg-x: 100; --bg-y: 0; } 50% { --bg-x: 100; --bg-y: 100; } 75% { --bg-x: 0; --bg-y: 100; } 100% { --bg-x: 0; --bg-y: 0; } }
+@keyframes rotate { from { --rotate: -70; --glow-translate-y: -65; } 25% { --glow-translate-y: -65; } 50% { --glow-translate-y: -65; } 60%, 75% { --glow-translate-y: -65; } 85% { --glow-translate-y: -65; } to { --rotate: calc(360 - 70); --glow-translate-y: -65; } }
+@keyframes hue-animation { 0% { --hue: 0; } 100% { --hue: 360; } }
+
+/* Enhanced focus states */
+.orbit-node.is-hovered { 
+  filter: none !important;
+  z-index: 100;
+}
+
+/* Default state - cards are always visible */
+.orbit-node .orbit-card { 
+  opacity: 0.9;
+  transform: scale(1);
+  filter: none;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* When hovering on any card */
+.orbit-node.is-hovered .orbit-card { 
+  opacity: 1; 
+  transform: scale(1.25) rotateY(8deg) rotateX(-3deg) translateZ(60px);
+  filter: none;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  animation: float-hover 3s ease-in-out infinite;
+}
+
+@keyframes float-hover {
+  0%, 100% { transform: scale(1.25) rotateY(8deg) rotateX(-3deg) translateZ(60px) translateY(0); }
+  50% { transform: scale(1.25) rotateY(8deg) rotateX(-3deg) translateZ(60px) translateY(-8px); }
+}
+
+/* Non-hovered cards when one is hovered - no blur to prevent overlap */
+.orbit-node.is-hovered::after { content: none; }
+.orbit-hovering .orbit-node:not(.is-hovered) { 
+  z-index: 1;
+}
+.orbit-hovering .orbit-node:not(.is-hovered) .orbit-card { 
+  opacity: 0.25 !important; 
+  transform: scale(0.85) !important;
+  filter: brightness(0.5) !important;
+}
+.orbit-panel { position: absolute; left: 50%; top: 110%; transform: translateX(-50%); width: min(420px, 70vw); background: rgba(0,0,0,0.65); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5); backdrop-filter: blur(10px); }
+.orbit-panel-media { height: 160px; background: #0f0f10; }
+.orbit-panel-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.orbit-panel-body { padding: 0.9rem 1rem 1.1rem; }
+.orbit-panel-title { color: #fff; font-weight: 700; margin-bottom: 0.3rem; }
+.orbit-panel-desc { color: rgba(255,255,255,0.85); font-size: 0.95rem; line-height: 1.5; }
+
+/* Hide header during orbit focus */
+.orbit-focus .header { opacity: 0; pointer-events: none; transition: opacity 0.25s ease; }
+.header { transition: opacity 0.25s ease; }
+.services-page.peek .header { opacity: 1 !important; pointer-events: auto !important; }
+.services-page .header { opacity: 0; pointer-events: none; }
+
+@media (max-width: 768px) {
+  .orbit-nav { height: 620px; }
+  .orbit-label { font-size: 0.9rem; }
+}
+
+/* Premium Detail Overlay */
+.orbit-detail-overlay { 
+  position: fixed; 
+  inset: 0; 
+  background: 
+    radial-gradient(ellipse at 30% 20%, rgba(147, 51, 234, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, rgba(236, 72, 153, 0.08) 0%, transparent 50%),
+    rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(20px) saturate(1.2); 
+  z-index: 60000; 
+  display: grid; 
+  place-items: center;
+  animation: overlay-fade-in 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes overlay-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.orbit-detail { 
+  width: min(1000px, 90vw); 
+  max-height: 85vh; 
+  background: 
+    linear-gradient(135deg, rgba(147, 51, 234, 0.05) 0%, transparent 60%),
+    linear-gradient(225deg, rgba(236, 72, 153, 0.05) 0%, transparent 60%),
+    rgba(10, 6, 24, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px; 
+  overflow: hidden; 
+  position: relative; 
+  display: grid; 
+  grid-template-columns: 1fr 1fr;
+  box-shadow: 
+    0 30px 90px rgba(0, 0, 0, 0.7),
+    0 0 120px rgba(147, 51, 234, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  animation: detail-slide-up 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes detail-slide-up {
+  from { transform: translateY(30px) scale(0.95); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* Holographic shimmer for detail */
+.orbit-detail::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.3) 45%,
+    rgba(147, 51, 234, 0.2) 47.5%,
+    rgba(236, 72, 153, 0.2) 50%,
+    rgba(255, 255, 255, 0.3) 52.5%,
+    transparent 57%
+  );
+  animation: holographic-sweep 6s infinite;
+  pointer-events: none;
+  opacity: 0.4;
+  z-index: 0;
+}
+
+.orbit-detail-media { 
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.1), transparent);
+  position: relative;
+  overflow: hidden;
+}
+
+.orbit-detail-media img { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+  display: block;
+  filter: saturate(1.1) contrast(1.05);
+}
+
+.orbit-detail-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    transparent 40%,
+    rgba(147, 51, 234, 0.2) 100%
+  );
+  pointer-events: none;
+}
+
+.orbit-detail-body { 
+  padding: 2.5rem; 
+  display: grid; 
+  gap: 1.5rem; 
+  align-content: start;
+  position: relative;
+  z-index: 1;
+}
+
+.orbit-detail-title { 
+  font-size: 2.5rem;
+  font-weight: 900;
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #e0e0ff 50%,
+    #ffeef8 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.orbit-detail-desc { 
+  color: rgba(255, 255, 255, 0.8); 
+  line-height: 1.8; 
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 300;
+}
+
+.orbit-detail-cta { 
+  display: flex; 
+  gap: 1rem; 
+  margin-top: 1rem;
+}
+
+.orbit-detail-cta button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  cursor: pointer;
+}
+
+.orbit-detail-cta button:first-child {
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.9), rgba(236, 72, 153, 0.9));
+  border: none;
+  color: white;
+}
+
+.orbit-detail-cta button:first-child:hover {
+  background: linear-gradient(135deg, rgba(147, 51, 234, 1), rgba(236, 72, 153, 1));
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(147, 51, 234, 0.4);
+}
+
+.orbit-detail-cta button:last-child {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.orbit-detail-cta button:last-child:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+}
+
+.orbit-detail-close { 
+  position: absolute; 
+  top: 20px; 
+  right: 20px; 
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  color: rgba(255, 255, 255, 0.8); 
+  border: 1px solid rgba(255, 255, 255, 0.2); 
+  border-radius: 50%; 
+  width: 44px; 
+  height: 44px; 
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 1.2rem;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 10;
+}
+
+.orbit-detail-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: white;
+  transform: rotate(90deg) scale(1.1);
+}
+
+@media (max-width: 960px) {
+  .orbit-detail { grid-template-columns: 1fr; max-height: 92vh; }
+}
+
+/* When modal open, prevent scroll */
+.orbit-modal-open { overflow: hidden; }
 
 .services-split-container {
   max-width: 1400px;
