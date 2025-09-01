@@ -2285,28 +2285,6 @@ html {
   transform: translateX(-50%) scale(1.05);
 }
 
-.orbit-scroll::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  width: 16px;
-  height: 16px;
-  transform: translateY(-50%);
-  border: 2px solid currentColor;
-  border-right: none;
-  border-bottom: none;
-}
-
-.orbit-scroll-left::before {
-  left: 25px;
-  transform: translateY(-50%) rotate(-45deg);
-}
-
-.orbit-scroll-right::before {
-  right: 25px;
-  transform: translateY(-50%) rotate(135deg);
-}
-
 .orbit-node { 
   position: absolute; 
   transform: translate3d(-50%, -50%, 0); 
@@ -6898,6 +6876,50 @@ html {
 .services-page {
   background: #000000;
   min-height: 100vh;
+  position: relative;
+}
+
+/* Back Button Styles */
+.services-back-button {
+  position: fixed;
+  top: 120px;
+  left: 30px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  letter-spacing: 0.3px;
+}
+
+.services-back-button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateX(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.services-back-button svg {
+  transition: transform 0.2s ease;
+  width: 16px;
+  height: 16px;
+}
+
+.services-back-button:hover svg {
+  transform: translateX(-2px);
+}
+
+.services-back-button span {
+  font-family: 'Inter', sans-serif;
 }
 
 .services-hero-section {
