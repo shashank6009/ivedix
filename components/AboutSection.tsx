@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 
 export default function AboutSection() {
   return (
@@ -9,7 +10,14 @@ export default function AboutSection() {
         {/* Left side - Image */}
         <div className="about-image">
           <div className="about-img-placeholder">
-            <span>Office Building View</span>
+            <Image
+              src="/assets/building.png"
+              alt="Office Building View"
+              width={500}
+              height={400}
+              className="about-building-image"
+              priority
+            />
           </div>
         </div>
         

@@ -91,15 +91,15 @@ export const SplashScreen: React.FC<SplashProps> = ({
         pointerEvents: isClosing ? 'none' : 'auto',
       }}
     >
-              {/* Video Background with Fade Transition */}
-        <div 
-          className={`absolute video-morphing ${
-            videoMorphing ? 'video-fade-out' : 'video-fullscreen'
-          }`}
-          style={{
-            willChange: videoMorphing ? 'opacity, transform' : 'auto',
-          }}
-        >
+      {/* Video Background with Fade Transition */}
+      <div 
+        className={`absolute video-morphing ${
+          videoMorphing ? 'video-fade-out' : 'video-fullscreen'
+        }`}
+        style={{
+          willChange: videoMorphing ? 'opacity, transform' : 'auto',
+        }}
+      >
         <video 
           className="w-full h-full object-contain bg-black" 
           autoPlay 
@@ -118,14 +118,21 @@ export const SplashScreen: React.FC<SplashProps> = ({
         </video>
       </div>
 
-                   {/* Simple overlay */}
-             <div className={`absolute inset-0 z-10 bg-black/40 transition-opacity duration-1000 ${
-               videoMorphing ? 'opacity-0' : 'opacity-100'
-             }`}></div>
-      
-      
+      {/* Simple overlay */}
+      <div className={`absolute inset-0 z-10 bg-black/40 transition-opacity duration-1000 ${
+        videoMorphing ? 'opacity-0' : 'opacity-100'
+      }`}></div>
 
-            {/* Main Content - Hidden during morphing */}
+      {/* Countdown Display */}
+      {seconds > 0 && (
+        <div className="absolute inset-0 z-20 flex items-center justify-center">
+          <div className="text-white text-8xl font-bold">
+            {seconds}
+          </div>
+        </div>
+      )}
+
+      {/* Main Content - Hidden during morphing */}
       <div className={`text-center space-y-12 relative z-30 transition-opacity duration-1000 ${
         videoMorphing ? 'opacity-0' : 'opacity-100'
       }`}>
@@ -154,12 +161,6 @@ export const SplashScreen: React.FC<SplashProps> = ({
           />
         </div>
       )}
-
-      
-
-      
-
-      
     </div>
   );
 };
