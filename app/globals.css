@@ -2421,7 +2421,7 @@ html {
   transform: translate(-50%, -50%);
   background: 
     radial-gradient(
-      closest-side,
+      closest-side at center,
       rgba(147, 51, 234, 0.4),
       rgba(236, 72, 153, 0.2) 40%,
       transparent 70%

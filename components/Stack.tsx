@@ -3,13 +3,19 @@
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useState } from "react";
 
-function CardRotate({ children, onSendToBack, sensitivity }) {
+interface CardRotateProps {
+  children: React.ReactNode;
+  onSendToBack: () => void;
+  sensitivity: number;
+}
+
+function CardRotate({ children, onSendToBack, sensitivity }: CardRotateProps) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const rotateX = useTransform(y, [-100, 100], [60, -60]);
   const rotateY = useTransform(x, [-100, 100], [-60, 60]);
 
-  function handleDragEnd(_, info) {
+  function handleDragEnd(_: any, info: any) {
     if (
       Math.abs(info.offset.x) > sensitivity ||
       Math.abs(info.offset.y) > sensitivity
@@ -50,11 +56,11 @@ export default function Stack({
   cardsData = [] as CardData[],
   animationConfig = { stiffness: 260, damping: 20 },
   sendToBackOnClick = false,
-  onCardChange = () => {}
+  onCardChange = (index: number) => {}
 }) {
   const [cards, setCards] = useState(cardsData);
 
-  const sendToBack = (id) => {
+  const sendToBack = (id: number) => {
     setCards((prev) => {
       const newCards = [...prev];
       const index = newCards.findIndex((card) => card.id === id);

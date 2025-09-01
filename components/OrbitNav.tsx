@@ -204,7 +204,9 @@ const OrbitNav: React.FC<OrbitNavProps> = ({ items, onSelect, className = '' }) 
       {items.map((item, i) => (
         <button
           key={item.id ?? i}
-          ref={(el) => (nodesRef.current[i] = el)}
+          ref={(el) => {
+            nodesRef.current[i] = el;
+          }}
           className={`orbit-node${hovered === i ? ' is-hovered' : ''}`}
           type="button"
           onMouseEnter={() => {
